@@ -1,17 +1,39 @@
 package com.bitcrunch.pensieve.android;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class MainActivity extends Activity {
+import com.facebook.Session;
+
+public class MainActivity extends FragmentActivity {
+	private LoginFragment loginFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		
+	    if (savedInstanceState == null) {
+	        // Add the fragment on initial activity setup
+	        loginFragment = new LoginFragment();
+	        getSupportFragmentManager()
+	        .beginTransaction()
+	        .add(android.R.id.content, loginFragment)
+	        .commit();
+	    } else {
+	        // Or set the fragment from restored state info
+	        loginFragment = (LoginFragment) getSupportFragmentManager()
+	        .findFragmentById(android.R.id.content);
+	    }
 	}
-
+	
+	  @Override
+	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	      super.onActivityResult(requestCode, resultCode, data);
+	      Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+	  }
+	  
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
