@@ -1,5 +1,7 @@
 package com.bitcrunch.pensieve.android;
 
+import java.util.Arrays;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -88,6 +90,8 @@ public class LoginFragment extends Fragment {
 
         LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
         authButton.setFragment(this);
+        // user_photos is in external profile properties -- non-optional.
+        authButton.setReadPermissions(Arrays.asList("user_photos"));
 
         return view;
     }
